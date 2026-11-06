@@ -1,0 +1,50 @@
+Nov  5 10:11:02 server sshd[12001]: Invalid user admin from 192.168.1.50 port 51234
+Nov  5 10:11:04 server sshd[12001]: Failed password for invalid user admin from 192.168.1.50 port 51234 ssh2
+Nov  5 10:11:15 server sshd[12009]: Connection closed by 45.33.32.156 port 43210 [preauth]
+Nov  5 10:11:22 server sshd[12015]: Failed password for root from 203.0.113.15 port 58902 ssh2
+Nov  5 10:11:28 server sshd[12018]: Failed password for root from 203.0.113.15 port 58904 ssh2
+Nov  5 10:11:35 server sshd[12022]: Failed password for root from 203.0.113.15 port 58908 ssh2
+Nov  5 10:12:01 server sshd[12030]: Accepted publickey for ali from 10.0.0.12 port 54120 ssh2: RSA SHA256:m5pXq9vT7K
+Nov  5 10:12:45 server sshd[12042]: Invalid user test from 185.220.101.5 port 39811
+Nov  5 10:12:47 server sshd[12042]: Failed password for invalid user test from 185.220.101.5 port 39811 ssh2
+Nov  5 10:13:00 server sshd[12050]: Failed password for invalid user guest from 198.51.100.24 port 48122 ssh2
+Nov  5 10:13:12 server sshd[12055]: Failed password for root from 203.0.113.15 port 58914 ssh2
+Nov  5 10:13:40 server sshd[12061]: Accepted password for developer from 172.16.0.44 port 49012 ssh2
+Nov  5 10:14:02 server sshd[12070]: Received disconnect from 10.0.0.12 port 54120:11: disconnected by user
+Nov  5 10:14:15 server sshd[12078]: Invalid user support from 185.220.101.5 port 41200
+Nov  5 10:14:18 server sshd[12078]: Failed password for invalid user support from 185.220.101.5 port 41200 ssh2
+Nov  5 10:14:50 server sshd[12085]: Failed password for ubuntu from 192.168.1.50 port 52100 ssh2
+Nov  5 10:15:02 server sshd[12091]: Failed password for ubuntu from 192.168.1.50 port 52104 ssh2
+Nov  5 10:15:30 server sshd[12102]: Connection closed by 45.33.32.156 port 44102 [preauth]
+Nov  5 10:16:01 server sshd[12110]: Failed password for root from 185.220.101.5 port 42510 ssh2
+Nov  5 10:16:15 server sshd[12115]: Invalid user oracle from 198.51.100.24 port 50114
+Nov  5 10:16:18 server sshd[12115]: Failed password for invalid user oracle from 198.51.100.24 port 50114 ssh2
+Nov  5 10:17:05 server sshd[12128]: Accepted publickey for ali from 10.0.0.12 port 55430 ssh2: RSA SHA256:m5pXq9vT7K
+Nov  5 10:17:40 server sshd[12134]: Failed password for root from 203.0.113.15 port 59002 ssh2
+Nov  5 10:18:10 server sshd[12140]: Failed password for debian from 192.168.1.50 port 53012 ssh2
+Nov  5 10:18:25 server sshd[12148]: Invalid user git from 45.33.32.156 port 45220
+Nov  5 10:18:28 server sshd[12148]: Failed password for invalid user git from 45.33.32.156 port 45220 ssh2
+Nov  5 10:19:00 server sshd[12155]: Failed password for root from 185.220.101.5 port 43190 ssh2
+Nov  5 10:19:42 server sshd[12163]: Connection reset by 198.51.100.24 port 51200 [preauth]
+Nov  5 10:20:10 server sshd[12170]: Failed password for postgres from 192.168.1.50 port 53400 ssh2
+Nov  5 10:20:33 server sshd[12177]: Accepted password for sysadmin from 172.16.0.44 port 50220 ssh2
+Nov  5 10:21:05 server sshd[12185]: Failed password for root from 203.0.113.15 port 59110 ssh2
+Nov  5 10:21:19 server sshd[12190]: Invalid user scanner from 45.33.32.156 port 46001
+Nov  5 10:21:22 server sshd[12190]: Failed password for invalid user scanner from 45.33.32.156 port 46001 ssh2
+Nov  5 10:22:00 server sshd[12201]: Received disconnect from 172.16.0.44 port 49012:11: disconnected by user
+Nov  5 10:22:45 server sshd[12210]: Failed password for root from 185.220.101.5 port 44020 ssh2
+Nov  5 10:23:10 server sshd[12218]: Failed password for root from 185.220.101.5 port 44026 ssh2
+Nov  5 10:23:55 server sshd[12225]: Connection closed by 198.51.100.24 port 52340 [preauth]
+Nov  5 10:24:20 server sshd[12232]: Failed password for invalid user admin from 192.168.1.50 port 54100 ssh2
+Nov  5 10:24:50 server sshd[12240]: Accepted password for ali from 10.0.0.12 port 56100 ssh2
+Nov  5 10:25:12 server sshd[12248]: Failed password for root from 203.0.113.15 port 59230 ssh2
+Nov  5 10:25:35 server sshd[12255]: Invalid user ftpuser from 45.33.32.156 port 47100
+Nov  5 10:25:38 server sshd[12255]: Failed password for invalid user ftpuser from 45.33.32.156 port 47100 ssh2
+Nov  5 10:26:01 server sshd[12262]: Failed password for root from 185.220.101.5 port 44810 ssh2
+Nov  5 10:26:30 server sshd[12270]: Received disconnect from 172.16.0.44 port 50220:11: disconnected by user
+Nov  5 10:27:11 server sshd[12279]: Failed password for invalid user ubnt from 198.51.100.24 port 53412 ssh2
+Nov  5 10:27:40 server sshd[12285]: Connection closed by 45.33.32.156 port 48002 [preauth]
+Nov  5 10:28:05 server sshd[12292]: Failed password for root from 203.0.113.15 port 59340 ssh2
+Nov  5 10:28:45 server sshd[12301]: Failed password for debian from 192.168.1.50 port 54990 ssh2
+Nov  5 10:29:20 server sshd[12310]: Accepted publickey for developer from 172.16.0.44 port 51400 ssh2: RSA SHA256:d8kLm2
+Nov  5 10:30:00 server sshd[12318]: Failed password for root from 185.220.101.5 port 45120 ssh2
