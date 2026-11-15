@@ -2,10 +2,12 @@ import re
 from collections import Counter
 
 FAILED_RE = re.compile(r"Failed password for (?:invalid user )?(\S+) from (\S+) port (\d+)")
-list_of_data = []
+ACCEPTED_RE = re.compile(r"Accepted (?:password|publickey) for (\S+) from (\S+) port (\d+)")
+list_of_accepted = []
+list_of_failed = []
 user_count = Counter()
 ip_count = Counter()
-dict_of_failed_logins_ips = {}
+# dict_of_first_failed_login_ips = {}
 
 def parse_failed(line):
     """Return (user, ip, port) for a failed-login line, otherwise None."""
@@ -16,41 +18,50 @@ def parse_failed(line):
 
     return None
 
-line_counter = 0
+def parse_accepted(line):
+    """Return (user, ip, port) for an accepted-login line, otherwise None."""
+
+    match = ACCEPTED_RE.search(line)
+    if match:
+        return match.groups()
+
+    return None
+
 with open("auth-sample.log") as f:
-    for line in f:
-        line_counter += 1
-        parse = parse_failed(line)
-        if parse:
-            user, ip, port = parse
-            list_of_data.append((user, ip, port))
+    for line_number, line in enumerate(f, start=1):
+        
+        parse_failed_result = parse_failed(line)
+        parse_accepted_result = parse_accepted(line)
+        if parse_failed_result:
+            user, ip, port = parse_failed_result
+            list_of_failed.append((user, ip, port, line_number, line.strip()[0:15]))
             ip_count[ip] += 1
             user_count[user] += 1
-            dict_of_failed_logins_ips[ip] = line_counter
+            # dict_of_first_failed_login_ips[ip] = line_number
+        elif parse_accepted_result:
+            user, ip, port = parse_accepted_result
+            list_of_accepted.append((user, ip, port, line_number, line.strip()[0:15]))
 
-for data in list_of_data:
+
+for data in list_of_failed:
     print(data)
 
 
-print (f"3 frequently used IP address: {ip_count.most_common(3)} \nand 5 High-intent users: {user_count.most_common(5)}")
+print (f"Top 3 attacking IPs: {ip_count.most_common(3)} \nand Top 5 targeted usernames: {user_count.most_common(5)}")
 
 list_of_suspicious_ips = [ip for ip, count in ip_count.items() if count > 5]
 print(f"\nthese IP addresses are suspicious: {list_of_suspicious_ips}")
 
-ACCEPTED_RE = re.compile(r"Accepted (?:password|publickey) for (\S+) from (\S+)")
-with open("auth-sample.log") as f:
-    for ip in list_of_suspicious_ips:
-        line_number = dict_of_failed_logins_ips[ip]
-        counter = 1
-        for line in f:
-               if counter <= line_number:
-                   counter += 1
-                   continue
-               # Move the file pointer to the line of the suspicious IP
-               if ACCEPTED_RE.search(line) and ip in line:
-                   print(f"\nthese lines are suspicious for {ip}:")
-                   print(line.strip())
-        f.seek(0)
+for ip in list_of_suspicious_ips:
+    print(f"\nthese lines are suspicious for {ip}:")
+    for user, ip_addr, port, line_number, timestamp in list_of_accepted :
+        if ip == ip_addr:
+            for user_failed, ip_failed, port_failed, line_number_failed, timestamp_failed in list_of_failed:
+                if timestamp > timestamp_failed and ip == ip_failed:
+                    print(f"Accepted login for {user} from {ip_addr} at {timestamp} after failed login at {timestamp_failed}")
+                    break
+                    
+            
 
 
 assert parse_failed("hello") is None, "parse_failed should return None for lines that don't match the regex"
