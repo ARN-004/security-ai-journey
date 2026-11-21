@@ -49,3 +49,4 @@ Nov  5 10:28:45 server sshd[12301]: Failed password for debian from 192.168.1.50
 Nov  5 10:29:20 server sshd[12310]: Accepted publickey for developer from 172.16.0.44 port 51400 ssh2: RSA SHA256:d8kLm2
 Nov  5 10:30:00 server sshd[12318]: Failed password for root from 185.220.101.5 port 45120 ssh2
 Nov  5 10:31:05 server sshd[12325]: Accepted password for ubuntu from 192.168.1.50 port 55012 ssh2
+2026-11-15T11:25:01.123456+03:30 ubuntu-vm sshd[4321]: Failed password for alireza from 192.168.159.129 port 59068 ssh2
