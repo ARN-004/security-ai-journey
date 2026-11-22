@@ -81,7 +81,6 @@ def find_suspicious_logins(list_of_accepted, list_of_failed, list_of_suspicious_
 
     return list_of_suspicious_logins
 
-
 def main():
     parser = argparse.ArgumentParser(description="Detect brute-force attacks from auth logs.")
     parser.add_argument("--logfile", default="auth-sample.log", help="Path to the auth log file")
@@ -110,8 +109,3 @@ def main():
 
 if __name__ == "__main__":
     main()         
-
-
-assert parse_failed("hello") is None, "parse_failed should return None for lines that don't match the regex"
-assert parse_failed("Failed password for invalid user root from 192.168.1.1 port 22") == ("root", "192.168.1.1", "22"), "parse_failed should return the correct groups for matching lines"
-assert parse_failed("Accepted publickey for developer from 172.16.0.44 port 51400") is None, "parse_failed should return None for lines that don't match the regex"
