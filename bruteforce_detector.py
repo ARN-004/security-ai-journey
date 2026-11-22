@@ -1,10 +1,12 @@
 import re
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, namedtuple
 import argparse
 
 FAILED_RE = re.compile(r"Failed password for (?:invalid user )?(\S+) from (\S+) port (\d+)")
 ACCEPTED_RE = re.compile(r"Accepted (?:password|publickey) for (\S+) from (\S+) port (\d+)")
 TIMESTAMP_RE = re.compile(r"(?:\w{3}  \d{1,2} \d{2}:\d{2}:\d{2}|\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})")
+
+LoginAttempt = namedtuple('LoginAttempt', ['user', 'ip', 'port', 'line_number', 'timestamp'])
 
 def parse_failed(line):
     """Return (user, ip, port) for a failed-login line, otherwise None."""
@@ -48,14 +50,16 @@ def analyze(logfile, threshold):
         if parse_failed_result:
             parse_timestamp_result = parse_timestamp(line)
             user, ip, port = parse_failed_result
-            list_of_failed.append((user, ip, port, line_number, parse_timestamp_result))
+            event = LoginAttempt(user=user, ip=ip, port=port, line_number=line_number, timestamp=parse_timestamp_result)
+            list_of_failed.append(event)
             ip_count[ip] += 1
             user_count[user] += 1
 
         elif parse_accepted_result:
             parse_timestamp_result = parse_timestamp(line)
             user, ip, port = parse_accepted_result
-            list_of_accepted.append((user, ip, port, line_number, parse_timestamp_result))
+            event = LoginAttempt(user=user, ip=ip, port=port, line_number=line_number, timestamp=parse_timestamp_result)
+            list_of_accepted.append(event)
 
     list_of_suspicious_ips = [ip for ip, count in ip_count.items() if count >= threshold]
 
@@ -65,19 +69,20 @@ def find_suspicious_logins(list_of_accepted, list_of_failed, list_of_suspicious_
     """Find and print suspicious successful logins that occurred after failed logins from the same IP."""
     list_of_suspicious_logins = []
     failed_by_ip = defaultdict(list)
-    for _, ip, _, line_number, timestamp in list_of_failed:
-        failed_by_ip[ip].append((line_number, timestamp))
+
+    for event_failed in list_of_failed:
+        failed_by_ip[event_failed.ip].append((event_failed.line_number, event_failed.timestamp))
 
     for ip in list_of_suspicious_ips:
         line_number_prev = 0
-        for user, ip_addr, _, line_number, timestamp in list_of_accepted:
-            if ip == ip_addr:
+        for event_accepted in list_of_accepted:
+            if ip == event_accepted.ip:
                 # for line_number_failed, timestamp_failed in failed_by_ip.get(ip, []):
                 for line_number_failed, timestamp_failed in failed_by_ip[ip]:
-                    if line_number > line_number_failed > line_number_prev:
-                        list_of_suspicious_logins.append((user, ip_addr, timestamp, timestamp_failed))
+                    if event_accepted.line_number > line_number_failed > line_number_prev:
+                        list_of_suspicious_logins.append((event_accepted.user, event_accepted.ip, event_accepted.timestamp, timestamp_failed))
                         break
-                line_number_prev = line_number
+                line_number_prev = event_accepted.line_number
 
     return list_of_suspicious_logins
 
