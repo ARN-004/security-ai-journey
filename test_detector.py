@@ -11,3 +11,4 @@ assert parse_accepted("Failed password for invalid user root from 192.168.1.1 po
 
 assert parse_timestamp("Jan  1 12:34:56 server sshd[12345]: Failed password for invalid user root from 192.168.1.1 port 22") == "Jan  1 12:34:56", "parse_timestamp should return the correct syslog timestamp for matching lines"
 assert parse_timestamp("2024-01-01T12:34:56 server sshd[12345]: Accepted publickey for developer from 172.16.0.44 port 51400") == "2024-01-01T12:34:56", "parse_timestamp should return the correct ISO timestamp for matching lines"
+assert parse_timestamp("Nov 15 11:25:01 vm sshd[1]: x") == "Nov 15 11:25:01", "parse_timestamp should return the correct syslog timestamp for matching lines"

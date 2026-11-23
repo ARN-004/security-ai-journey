@@ -4,7 +4,7 @@ import argparse
 
 FAILED_RE = re.compile(r"Failed password for (?:invalid user )?(\S+) from (\S+) port (\d+)")
 ACCEPTED_RE = re.compile(r"Accepted (?:password|publickey) for (\S+) from (\S+) port (\d+)")
-TIMESTAMP_RE = re.compile(r"(?:\w{3}  \d{1,2} \d{2}:\d{2}:\d{2}|\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})")
+TIMESTAMP_RE = re.compile(r"(?:\w{3}( \d{2}|  \d{1}) \d{2}:\d{2}:\d{2}|\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})")
 
 LoginAttempt = namedtuple('LoginAttempt', ['user', 'ip', 'port', 'line_number', 'timestamp'])
 
@@ -35,14 +35,14 @@ def parse_timestamp(line):
 
     return None
 
-def analyze(logfile, threshold):
-    """Analyze lines from the log file and update the counters and lists accordingly."""
+def analyze(lines, threshold):
+    """Analyze lines from the log file and fill the appropriate lists and counters."""
     list_of_accepted = []
     list_of_failed = []
     user_count = Counter()
     ip_count = Counter()
 
-    for line_number, line in enumerate(logfile, start=1):
+    for line_number, line in enumerate(lines, start=1):
 
         parse_failed_result = parse_failed(line)
         parse_accepted_result = parse_accepted(line)
@@ -66,7 +66,7 @@ def analyze(logfile, threshold):
     return list_of_accepted, list_of_failed, user_count, ip_count, list_of_suspicious_ips
 
 def find_suspicious_logins(list_of_accepted, list_of_failed, list_of_suspicious_ips):
-    """Find and print suspicious successful logins that occurred after failed logins from the same IP."""
+    """Find suspicious successful logins that occurred after failed logins from the same IP."""
     list_of_suspicious_logins = []
     failed_by_ip = defaultdict(list)
 
