@@ -87,8 +87,7 @@ def find_suspicious_logins(list_of_accepted, list_of_failed, list_of_suspicious_
             for event_accepted in accepted_by_ip[ip]:
                 recent_failures = [(line_number_failed, timestamp_failed) for line_number_failed, timestamp_failed in failed_by_ip[ip] if line_number_prev < line_number_failed < event_accepted.line_number]
                 list_of_suspicious_logins.append((event_accepted.user, event_accepted.ip, event_accepted.timestamp, recent_failures[-1][1], recent_failures[0][1], len(recent_failures)))
-                break
-            line_number_prev = event_accepted.line_number
+                line_number_prev = event_accepted.line_number
 
     return list_of_suspicious_logins
 
@@ -98,8 +97,14 @@ def main():
     parser.add_argument("--failed-threshold", type=int, default=5, help="Threshold for failed login attempts to consider an IP suspicious")
     args = parser.parse_args()
 
-    with open(args.logfile) as f:
-        Result = analyze(f, args.failed_threshold)
+    try:
+        with open(args.logfile) as f:
+            Result = analyze(f, args.failed_threshold)
+
+    except FileNotFoundError:
+        # print(f"Error: Log file '{args.logfile}' not found.")
+        # sys.exit(1)
+        parser.error(f"Log file '{args.logfile}' not found.")
 
     for data in Result.list_of_failed:
         print(data)
