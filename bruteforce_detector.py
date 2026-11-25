@@ -115,7 +115,7 @@ def main():
         for data in Result.list_of_failed:
             print(data)
 
-    print (f"Top 3 attacking IPs: {Result.ip_count.most_common(3)} \nand Top 5 targeted usernames: {Result.user_count.most_common(5)}")
+    print(f"Top 3 attacking IPs: {Result.ip_count.most_common(3)} \nand Top 5 targeted usernames: {Result.user_count.most_common(5)}")
     print(f"\nthese IP addresses are suspicious: {Result.list_of_suspicious_ips}")
 
     suspicious_logins = find_suspicious_logins(Result.list_of_accepted, Result.list_of_failed, Result.list_of_suspicious_ips)
