@@ -1,5 +1,5 @@
 
-from bruteforce_detector import parse_failed, parse_accepted, parse_timestamp, analyze, find_suspicious_logins
+from .test_detector import parse_failed, parse_accepted, parse_timestamp, analyze, find_suspicious_logins
 import pytest
 
 # --- تست‌های parse_failed ---
